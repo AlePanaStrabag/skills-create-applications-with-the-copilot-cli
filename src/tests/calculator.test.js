@@ -8,7 +8,7 @@
  *   2 + 3, 10 - 4, 45 * 2, 20 / 5
  */
 
-const { add, subtract, multiply, divide } = require('../calculator');
+const { add, subtract, multiply, divide, modulo, power, squareroot } = require('../calculator');
 
 // ── Addition ──────────────────────────────────────────────────────────────────
 describe('add', () => {
@@ -95,7 +95,78 @@ describe('multiply', () => {
   });
 });
 
-// ── Division ──────────────────────────────────────────────────────────────────
+// ── Modulo ────────────────────────────────────────────────────────────────────
+describe('modulo', () => {
+  test('10 % 3 = 1', () => {
+    expect(modulo(10, 3)).toBe(1);
+  });
+
+  test('returns zero when a is divisible by b', () => {
+    expect(modulo(20, 5)).toBe(0);
+  });
+
+  test('works with negative dividend', () => {
+    expect(modulo(-7, 3)).toBe(-1);
+  });
+
+  test('works with decimal numbers', () => {
+    expect(modulo(5.5, 2)).toBeCloseTo(1.5);
+  });
+
+  test('throws an error when b is zero', () => {
+    expect(() => modulo(10, 0)).toThrow('Division by zero');
+  });
+});
+
+// ── Power ─────────────────────────────────────────────────────────────────────
+describe('power', () => {
+  test('2 ^ 8 = 256', () => {
+    expect(power(2, 8)).toBe(256);
+  });
+
+  test('any number to the power of 0 is 1', () => {
+    expect(power(99, 0)).toBe(1);
+  });
+
+  test('any number to the power of 1 is itself', () => {
+    expect(power(7, 1)).toBe(7);
+  });
+
+  test('handles fractional exponents', () => {
+    expect(power(4, 0.5)).toBeCloseTo(2);
+  });
+
+  test('handles negative exponents', () => {
+    expect(power(2, -1)).toBeCloseTo(0.5);
+  });
+
+  test('0 to the power of 0 is 1', () => {
+    expect(power(0, 0)).toBe(1);
+  });
+});
+
+// ── Square Root ───────────────────────────────────────────────────────────────
+describe('squareroot', () => {
+  test('square root of 25 = 5', () => {
+    expect(squareroot(25)).toBe(5);
+  });
+
+  test('square root of 0 = 0', () => {
+    expect(squareroot(0)).toBe(0);
+  });
+
+  test('square root of 2 is approximately 1.414', () => {
+    expect(squareroot(2)).toBeCloseTo(1.414, 3);
+  });
+
+  test('square root of 144 = 12', () => {
+    expect(squareroot(144)).toBe(12);
+  });
+
+  test('throws an error for negative numbers', () => {
+    expect(() => squareroot(-9)).toThrow('Cannot take square root of a negative number');
+  });
+});
 describe('divide', () => {
   test('20 / 5 = 4 (from image example)', () => {
     expect(divide(20, 5)).toBe(4);
